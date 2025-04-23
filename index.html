@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Level 2 Horticulture Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .question { margin-bottom: 20px; }
+    .question h3 { margin-bottom: 10px; }
+    .answers label { display: block; margin-bottom: 5px; }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Level 2 Horticulture Operative Quiz</h1>
+  <form id="quizForm"></form>
+  <button onclick="submitQuiz()">Submit Quiz</button>
+  <div id="results"></div>
+
+  <script>
+    const questions = [
+      {question: "Which of the following plants is best suited for a shady area?", options: ["Lavandula angustifolia", "Rosa rugosa", "Hosta sieboldiana", "Sedum spectabile"], answer: 2},
+      {question: "What is a primary reason to select native plants for landscaping?", options: ["They bloom all year round", "They require more water", "They are more resistant to local pests", "They are more colourful"], answer: 2},
+      {question: "Which plant is typically used as ground cover?", options: ["Clematis montana", "Pachysandra terminalis", "Wisteria sinensis", "Acer palmatum"], answer: 1},
+      {question: "Which factor is least important when selecting plants for a site?", options: ["Soil type", "Client preference", "Leaf colour", "Sun exposure"], answer: 2},
+      {question: "Which of these is a drought-tolerant plant?", options: ["Astilbe chinensis", "Eryngium giganteum", "Ligularia dentata", "Gunnera manicata"], answer: 1},
+      {question: "Which of the following trees is most appropriate for a small urban garden?", options: ["Quercus robur", "Acer griseum", "Fagus sylvatica", "Populus nigra"], answer: 1},
+      {question: "Which plant is commonly used in formal hedging?", options: ["Cornus alba", "Buxus sempervirens", "Salix caprea", "Mahonia aquifolium"], answer: 1},
+      {question: "A plant classified as 'semi-evergreen' will:", options: ["Keep all its leaves year-round", "Never lose its leaves", "Lose its leaves in harsh winters", "Always be bare in winter"], answer: 2},
+      {question: "Which of these plants is best suited to acidic soils?", options: ["Rhododendron ponticum", "Lavatera thuringiaca", "Ceanothus thyrsiflorus", "Buddleja davidii"], answer: 0},
+      {question: "What is the key benefit of planting a mixed herbaceous border?", options: ["Uniform flowering", "Seasonal interest and biodiversity", "Easier maintenance", "Attracts fewer insects"], answer: 1},
+      {question: "What is the ideal soil pH for most plants?", options: ["3.5–4.5", "5.0–5.5", "6.0–7.0", "8.0–9.0"], answer: 2},
+      {question: "Clay soil is typically:", options: ["Free-draining and sandy", "Heavy and retains water", "Nutrient-poor and dry", "Acidic and crumbly"], answer: 1},
+      {question: "Which of the following improves soil drainage?", options: ["Clay", "Lime", "Organic matter", "Fertiliser"], answer: 2},
+      {question: "What term describes soil with equal parts sand, silt, and clay?", options: ["Sandy soil", "Clay soil", "Loamy soil", "Silty soil"], answer: 2},
+      {question: "A soil test helps determine:", options: ["Leaf shape", "Soil colour", "Nutrient content", "Plant age"], answer: 2},
+      {question: "Which nutrient is essential for flowering and fruiting?", options: ["Nitrogen", "Potassium", "Magnesium", "Iron"], answer: 1},
+      {question: "What is the role of earthworms in soil health?", options: ["Cause soil erosion", "Compact the soil", "Improve aeration and fertility", "Feed on roots"], answer: 2},
+      {question: "Which soil type warms up quickly in spring?", options: ["Chalk", "Clay", "Sand", "Peat"], answer: 2},
+      {question: "A deficiency in nitrogen results in:", options: ["Leaf scorching", "Stunted root growth", "Yellowing leaves", "Wilting flowers"], answer: 2},
+      {question: "Soil structure is important because it affects:", options: ["Flower colour", "Root development and water movement", "Seed shape", "Pest resistance"], answer: 1},
+      {question: "A key benefit of green spaces in urban areas is:", options: ["Increase in soil compaction", "Higher noise levels", "Improved mental well-being", "Reduced plant diversity"], answer: 2},
+      {question: "Which of the following is a sustainable landscaping practice?", options: ["Using artificial turf", "Frequent watering", "Mulching with bark", "Removing all native plants"], answer: 2},
+      {question: "What is meant by 'biodiversity'?", options: ["One type of species in a space", "Presence of many different species", "No plant life", "Use of artificial plants"], answer: 1},
+      {question: "Which of these helps reduce water runoff in urban gardens?", options: ["Concrete patios", "Lawns with gentle slopes", "Block paving", "Gravel without edging"], answer: 1},
+      {question: "Green roofs are beneficial because they:", options: ["Absorb rainfall and reduce heat", "Attract pests", "Cost less to install", "Require no maintenance"], answer: 0},
+      {question: "A community garden can:", options: ["Encourage anti-social behaviour", "Reduce access to fresh produce", "Foster social cohesion", "Discourage volunteering"], answer: 2},
+      {question: "Wildflower meadows are important because they:", options: ["Require daily watering", "Reduce insect populations", "Support pollinators", "Are high maintenance"], answer: 2},
+      {question: "A tree’s canopy provides:", options: ["Increased wind speeds", "Shade and reduced urban heat", "Poor soil structure", "No environmental benefit"], answer: 1},
+      {question: "Parks and green spaces can help mitigate:", options: ["Soil erosion", "Air and noise pollution", "Building maintenance", "Concrete wear"], answer: 1},
+      {question: "Which practice supports wildlife in green spaces?", options: ["Removing hedgerows", "Installing artificial grass", "Creating log piles", "Pesticide spraying"], answer: 2},
+      {question: "Which part of the plant conducts water and minerals?", options: ["Phloem", "Xylem", "Stomata", "Chloroplast"], answer: 1},
+      {question: "Photosynthesis mainly occurs in the:", options: ["Roots", "Stems", "Leaves", "Flowers"], answer: 2},
+      {question: "Which plant hormone promotes growth?", options: ["Ethylene", "Cytokinin", "Auxin", "Abscisic acid"], answer: 2},
+      {question: "The process of transpiration occurs through the:", options: ["Roots", "Bark", "Stomata", "Flowers"], answer: 2},
+      {question: "What is the function of the flower in a plant?", options: ["Water transport", "Nutrient absorption", "Reproduction", "Photosynthesis"], answer: 2},
+      {question: "A plant that completes its life cycle in one year is called:", options: ["Perennial", "Biennial", "Annual", "Evergreen"], answer: 2},
+      {question: "Which organelle is responsible for photosynthesis?", options: ["Nucleus", "Vacuole", "Chloroplast", "Mitochondria"], answer: 2},
+      {question: "Roots are primarily responsible for:", options: ["Reproduction", "Light absorption", "Anchoring and nutrient uptake", "Pollination"], answer: 2},
+      {question: "Which part of a seed becomes the plant’s shoot?", options: ["Cotyledon", "Radicle", "Plumule", "Seed coat"], answer: 2},
+      {question: "Which of the following is an example of asexual reproduction in plants?", options: ["Seed production", "Grafting", "Pollination", "Flowering"], answer: 1}
+    ];
+
+    const form = document.getElementById('quizForm');
+    questions.forEach((q, index) => {
+      const div = document.createElement('div');
+      div.classList.add('question');
+      div.innerHTML = `<h3>Q${index + 1}: ${q.question}</h3>` +
+        q.options.map((opt, i) => `
+          <label>
+            <input type="radio" name="q${index}" value="${i}" required /> ${opt}
+          </label>`
+        ).join('');
+      form.appendChild(div);
+    });
+
+    function submitQuiz() {
+      const results = document.getElementById('results');
+      let score = 0;
+      questions.forEach((q, i) => {
+        const answer = document.querySelector(`input[name='q${i}']:checked`);
+        if (answer && parseInt(answer.value) === q.answer) {
+          score++;
+        }
+      });
+      results.innerHTML = `<h2>Your score: ${score} / ${questions.length}</h2>`;
+    }
+  </script>
+</body>
+</html>
